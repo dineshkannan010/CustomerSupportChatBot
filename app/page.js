@@ -5,10 +5,10 @@ import { Box, Button, Stack, TextField } from "@mui/material"
 export default function Home() {
   //messages is for history of messages
   const [messages, setMessages]= useState([
-    { role: 'assistant', content:'Hello! How can I assist you today with your understanding of object-oriented design concepts?'}
+    { role: 'assistant', content:'Hello! I am a Headstarter Support Agent, how can I assist you today?'}
   ])
 
-  // message is for a paticular message at one instance
+  // message that is typed in the textbox
   const [message, setMessage]= useState('')
 
   const sendMessage = async () => {
