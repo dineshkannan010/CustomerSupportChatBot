@@ -1,6 +1,6 @@
 "use client"
 import { useState } from "react"
-import { Box, Button, Stack, TextField } from "@mui/material"
+import { Box, Button, Stack, TextField, AppBar, Toolbar, IconButton, Typography, Container } from "@mui/material"
 
 export default function Home() {
   //messages is for history of messages
@@ -13,11 +13,10 @@ export default function Home() {
 
   const sendMessage = async () => {
     setMessage('')
-    setMessages((messages)=>[...messages, {role: 'user', content: message},
-      {
-        role:'assistant', 
-        content: '' ,
-      },
+    setMessages((messages)=>[
+        ...messages, 
+        {role: 'user', content: message},
+        { role:'assistant', content: '' },
     ])
     const response= fetch('api/chat', {
       method: 'POST',
@@ -58,14 +57,38 @@ export default function Home() {
       flexDirection={"column"}
       justifyContent={"center"}
       alignItems={"center"}
+      bgcolor={"black"}
 
     >
+       {/* Navbar */}
+    <Box sx={{ flexGrow: 1, width: "100%" }}>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+          >
+          </IconButton>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            Customer Service Bot
+          </Typography>
+          <Button color="inherit">Login</Button>
+        </Toolbar>
+      </AppBar>
+    </Box>
+    <Container sx={{ flexGrow: 1, width: "100%" }} >
+
       <Stack 
         direction={'column'} 
-        width={"500px"} 
-        height={"700px"} 
-        border={"1px solid black"} 
+        width={"1200px"} 
+        height={"900px"} 
+        border={"1px solid grey"} 
         p={2} 
+        flexGrow={1} 
+        overflow={"auto"} 
         spacing={3}>
         <Stack 
           direction={'column'} 
@@ -83,7 +106,7 @@ export default function Home() {
                   <Box
                     bgcolor={message.role === 'assistant' ? 'primary.main' : 'secondary.main'}
                     color={"white"}
-                    borderRadius={16}
+                    borderRadius={10}
                     p={2}
                   >
                       {message.content}
@@ -98,10 +121,31 @@ export default function Home() {
             fullWidth 
             value={message}
             onChange={(e)=> setMessage(e.target.value)}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: "red", // border color
+                },
+                "&:hover fieldset": {
+                  borderColor: "blue", // border color on hover
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "green", // border color when focused
+                },
+                color: "white", // text color
+              },
+              "& .MuiInputLabel-root": {
+                color: "white", // label color
+              },
+              "& .MuiInputBase-input": {
+                color: "white", // input text color
+              },
+            }}
           />
           <Button variant="contained" onClick={sendMessage}>Send</Button>
         </Stack>
       </Stack>
+      </Container>
     </Box>
   )
 }
